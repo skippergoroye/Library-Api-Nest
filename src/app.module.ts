@@ -13,7 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       envFilePath: ".env",
       isGlobal: true
     }),
-    MongooseModule.forRoot(process.env.DB_URI || ""),
+    MongooseModule.forRoot(process.env.DB_URI || 'mongodb://localhost:27017/library-nest-api'),
     BookModule],
   controllers: [AppController],
   providers: [AppService],
