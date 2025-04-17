@@ -16,7 +16,12 @@ export class BookService {
   ) {}
 
   async findAll(query: Query): Promise<Book[]> {
+
     // console.log(query);
+
+    const resPerPage = 2
+    const currentPage = Number(query.page) || 1
+    const skip = resPerPage * (currentPage - 1)
     const  keyword = query.keyword ? {
       title: {
         $regex: query.keyword,
@@ -24,7 +29,7 @@ export class BookService {
       }
       
     } : {}; 
-    const books = await this.bookmodel.find({ ...keyword});
+    const books = await this.bookmodel.find({ ...keyword}).limit(resPerPage).skip(skip);
     return books;
   }
 
