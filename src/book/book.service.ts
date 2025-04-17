@@ -1,11 +1,13 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
+  NotFoundException, 
 } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { Book } from './schema/book.schema';
 import { InjectModel } from '@nestjs/mongoose';
+import { Query  } from 'express-serve-static-core';
+import { title } from 'process';
 
 @Injectable()
 export class BookService {
@@ -13,8 +15,16 @@ export class BookService {
     @InjectModel(Book.name) private bookmodel: mongoose.Model<Book>,
   ) {}
 
-  async findAll(): Promise<Book[]> {
-    const books = await this.bookmodel.find();
+  async findAll(query: Query): Promise<Book[]> {
+    // console.log(query);
+    const  keyword = query.keyword ? {
+      title: {
+        $regex: query.keyword,
+        $options: 'i',
+      }
+      
+    } : {}; 
+    const books = await this.bookmodel.find({ ...keyword});
     return books;
   }
 
