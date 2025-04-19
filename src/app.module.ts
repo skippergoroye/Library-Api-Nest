@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { BookModule } from './book/book.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -14,7 +15,8 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.DB_URI || 'mongodb://localhost:27017/library-nest-api'),
-    BookModule],
+    BookModule,
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -7,7 +7,7 @@ import * as mongoose from 'mongoose';
 import { Book } from './schema/book.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Query  } from 'express-serve-static-core';
-import { title } from 'process';
+
 
 @Injectable()
 export class BookService {
@@ -19,7 +19,7 @@ export class BookService {
 
     // console.log(query);
 
-    const resPerPage = 2
+    const resPerPage = 10
     const currentPage = Number(query.page) || 1
     const skip = resPerPage * (currentPage - 1)
     const  keyword = query.keyword ? {
@@ -71,7 +71,5 @@ export class BookService {
      throw new NotFoundException(`Book not found`);
    }
    return deletedBook;
-  }
-    
-   
+  }  
 }
